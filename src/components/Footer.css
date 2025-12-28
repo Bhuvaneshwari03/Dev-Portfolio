@@ -1,0 +1,73 @@
+.footer {
+    width: 100%;
+    margin-top: auto;
+    border-radius: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    background: rgba(10, 10, 10, 0.8); /* Darker, more standard footer bg */
+    backdrop-filter: blur(10px);
+    z-index: 10;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* responsive wrapping */
+    gap: 1rem;
+}
+
+.footer-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.footer-logo {
+    font-weight: 400; /* Reduced from 700 */
+    font-size: 0.95rem; /* Reduced from 1.1rem */
+    color: #b0b0b0; /* Reduced from #fff to match other side */
+    text-decoration: none;
+}
+
+.footer-copy {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.footer-right {
+    text-align: right;
+    max-width: 400px;
+}
+
+.footer-quote {
+    font-style: italic;
+    color: #b0b0b0; /* Same color as left side now */
+    font-size: 0.95rem; /* Same size as left side */
+    margin-bottom: 0.2rem;
+    font-weight: 400; /* Ensure it's not too thin */
+}
+
+.footer-sub {
+    font-size: 0.75rem;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+        justify-content: center;
+    }
+    
+    .footer-right {
+        text-align: center;
+    }
+}
