@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 import ParticleBackground from './components/ParticleBackground';
 import Home from './pages/Home';
 import Experience from './pages/Experience';
+import ExperienceDetails from './pages/ExperienceDetails';
 import Projects from './pages/Projects';
 import Contact from './pages/Contact';
 import Goodbye from './pages/Goodbye';
@@ -24,6 +25,7 @@ function App() {
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<Home />} />
             <Route path="/experience" element={<Experience />} />
+            <Route path="/experience/details" element={<ExperienceDetails />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/goodbye" element={<Goodbye />} />
