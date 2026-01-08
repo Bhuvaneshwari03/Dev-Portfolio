@@ -57,17 +57,14 @@ ul {
 }
 
 /* Glass Card */
-/* Glass Card */
 .glass-card {
-  background: linear-gradient(135deg, rgba(15, 15, 15, 0.9), rgba(15, 15, 15, 0.7)); /* Much darker and more opaque */
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  border-left: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 16px;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  background: #000000 !important; /* Pure black, completely opaque */
+  border: 2px solid rgba(255, 255, 255, 0.1); /* Darker, more subtle border */
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 1), inset 0 0 0 1px rgba(0, 0, 0, 0.5); /* Pure black shadow, no light effects */
   padding: 2rem;
+  position: relative;
+  opacity: 1;
 }
 
 /* Buttons */
@@ -116,4 +113,17 @@ ul {
 /* Page Transitions */
 .page-transition {
   width: 100%;
+}
+
+/* Project Details Pages - Full Black Background */
+.project-details-page {
+  background: #000000 !important;
+}
+
+.project-details-page .main-content {
+  background: #000000 !important;
+}
+
+.project-details-page::before {
+  display: none !important;
 }

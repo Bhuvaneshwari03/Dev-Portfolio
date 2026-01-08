@@ -4,9 +4,9 @@
     justify-content: center;
     align-items: center;
     font-size: 1rem;
-    position: fixed;
-    top: 0;
-    z-index: 999;
+    position: fixed !important; /* Force fixed positioning */
+    top: 0 !important;
+    z-index: 1000; /* Ensure it stays on top */
     width: 100%;
     border-radius: 0;
     border-top: none;
@@ -89,14 +89,14 @@
         left: -100%;
         opacity: 1;
         transition: all 0.5s ease;
-        background: #0a0a0a;
+        background: #000000;
+        border-top: 2px solid rgba(255,255,255,0.2);
         justify-content: flex-start;
         padding-top: 2rem;
-        border-top: 1px solid rgba(255,255,255,0.1);
     }
 
     .nav-menu.active {
-        background: #0a0a0a;
+        background: #000000;
         left: 0;
         opacity: 1;
         transition: all 0.5s ease;

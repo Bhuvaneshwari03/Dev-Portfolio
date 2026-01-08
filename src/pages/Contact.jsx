@@ -1,25 +1,12 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
+import { useForm, ValidationError } from '@formspree/react';
 import { motion } from 'framer-motion';
-import { FaPaperPlane, FaLinkedin, FaGithub, FaCode, FaHackerrank } from 'react-icons/fa';
+import { FaPaperPlane, FaLinkedin, FaGithub, FaEnvelope } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
 import PageWrapper from '../components/PageWrapper';
 
 const Contact = () => {
-    const form = useRef();
-    const [status, setStatus] = useState('');
-
-    const sendEmail = (e) => {
-        e.preventDefault();
-        setStatus('sending');
-        
-        // Simulating EmailJS call, replace with actual integration if package installed
-        // emailjs.sendForm(...) 
-        
-        setTimeout(() => {
-            setStatus('sent');
-            e.target.reset();
-            setTimeout(() => setStatus(''), 3000);
-        }, 1500);
-    };
+    const [state, handleSubmit] = useForm(import.meta.env.VITE_FORMSPREE_FORM_ID || "FORM_ID_MISSING");
 
     return (
         <PageWrapper style={{ maxWidth: '800px', margin: '0 auto' }}>
@@ -28,37 +15,67 @@ const Contact = () => {
                 <p style={{ textAlign: 'center', color: '#b0b0b0', marginBottom: '2rem', fontSize: '1.1rem' }}>
                     Have a question or want to work together? 
                 </p>
-                <form ref={form} onSubmit={sendEmail} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
-                        <div className="form-group">
-                            <label style={{ display: 'block', marginBottom: '0.5rem', color: '#ccc', fontSize: '0.9rem' }}>Name</label>
-                            <input type="text" name="user_name" required className="form-input" placeholder="Your Name" />
+                {state.succeeded ? (
+                    <motion.div 
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        style={{ textAlign: 'center', padding: '2rem' }}
+                    >
+                        <h3 style={{ color: '#4ade80', marginBottom: '1rem', fontSize: '1.5rem' }}>Message Sent Successfully!</h3>
+                        <p style={{ color: '#e0e0e0' }}>Thanks for reaching out. I'll get back to you soon.</p>
+                        <button 
+                            onClick={() => window.location.reload()} 
+                            className="btn btn-primary" 
+                            style={{ marginTop: '2rem' }}
+                        >
+                            Send Another Message
+                        </button>
+                    </motion.div>
+                ) : (
+                    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                        <div className="contact-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+                            <div className="form-group">
+                                <label style={{ display: 'block', marginBottom: '0.5rem', color: '#ccc', fontSize: '0.9rem' }}>Name</label>
+                                <input type="text" name="name" id="name" required className="form-input" placeholder="Your Name" />
+                                <ValidationError prefix="Name" field="name" errors={state.errors} />
+                            </div>
+                            <div className="form-group">
+                                <label style={{ display: 'block', marginBottom: '0.5rem', color: '#ccc', fontSize: '0.9rem' }}>Email</label>
+                                <input type="email" name="email" id="email" required className="form-input" placeholder="your@email.com" />
+                                <ValidationError prefix="Email" field="email" errors={state.errors} />
+                            </div>
                         </div>
+                        
                         <div className="form-group">
-                            <label style={{ display: 'block', marginBottom: '0.5rem', color: '#ccc', fontSize: '0.9rem' }}>Email</label>
-                            <input type="email" name="user_email" required className="form-input" placeholder="your@email.com" />
+                            <label style={{ display: 'block', marginBottom: '0.5rem', color: '#ccc', fontSize: '0.9rem' }}>Message</label>
+                            <textarea name="message" id="message" rows="5" required className="form-input" placeholder="Tell me how I can help"></textarea>
+                            <ValidationError prefix="Message" field="message" errors={state.errors} />
                         </div>
-                    </div>
-                    
-                    <div className="form-group">
-                        <label style={{ display: 'block', marginBottom: '0.5rem', color: '#ccc', fontSize: '0.9rem' }}>Message</label>
-                        <textarea name="message" rows="5" required className="form-input" placeholder="What's on your mind?"></textarea>
-                    </div>
 
-                    <button type="submit" className="btn btn-primary" disabled={status === 'sending'} style={{ alignSelf: 'flex-start', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                        {status === 'sending' ? 'Sending...' : status === 'sent' ? 'Message Sent!' : 'Send Message'}
-                        <FaPaperPlane />
-                    </button>
-                </form>
+                        <button type="submit" className="btn btn-primary" disabled={state.submitting} style={{ alignSelf: 'flex-start', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                            {state.submitting ? 'Sending...' : 'Send Message'}
+                            <FaPaperPlane />
+                        </button>
+                    </form>
+                )}
             </div>
 
             <div style={{ marginTop: '4rem', textAlign: 'center' }}>
                 <h3 style={{ marginBottom: '1.5rem', color: '#fff' }}>Connect on Socials</h3>
                 <div style={{ display: 'flex', justifyContent: 'center', gap: '2rem' }}>
-                    <a href="https://linkedin.com/in/bhuvaneshwari-g-51675724b" target="_blank" rel="noreferrer" className="social-icon"><FaLinkedin /></a>
+                    <a href="https://www.linkedin.com/in/bhuvaneshwari-dev" target="_blank" rel="noreferrer" className="social-icon"><FaLinkedin /></a>
                     <a href="https://github.com/Bhuvaneshwari03" target="_blank" rel="noreferrer" className="social-icon"><FaGithub /></a>
-                    <a href="https://leetcode.com/u/49wF5B4bOO/" target="_blank" rel="noreferrer" className="social-icon"><FaCode /></a>
-                    <a href="https://hackerrank.com/profile/24MCR013" target="_blank" rel="noreferrer" className="social-icon"><FaHackerrank /></a>
+                    <a href="https://x.com/whysobhuma?t=yQH4Zb01DNmD_8zi3nlvRg&s=03" target="_blank" rel="noreferrer" className="social-icon"><FaXTwitter /></a>
+                    <a 
+                        href="mailto:bhuvaneshwari.2003g@gmail.com" 
+                        className="social-icon"
+                        onClick={(e) => {
+                           navigator.clipboard.writeText("bhuvaneshwari.2003g@gmail.com");
+                           alert("Email address copied to clipboard!");
+                        }}
+                    >
+                        <FaEnvelope />
+                    </a>
                 </div>
             </div>
 

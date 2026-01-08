@@ -12,7 +12,7 @@ const Goodbye = () => {
             alignItems: 'center',
             justifyContent: 'center',
         }}>
-            <div className="glass-card" style={{ 
+            <div className="glass-card goodbye-card" style={{ 
                 padding: '4rem', 
                 textAlign: 'center',
                 maxWidth: '600px',

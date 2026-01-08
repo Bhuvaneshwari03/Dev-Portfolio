@@ -1,30 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaGithub } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 import PageWrapper from '../components/PageWrapper';
 
 const Projects = () => {
+    const [imageErrors, setImageErrors] = useState({});
+    const navigate = useNavigate();
+
     const projects = [
         {
-            title: 'Tax Assistant',
-            desc: 'A TypeScript-based tax calculation assistant for handling complex calculations and minimizing errors.',
-            tech: ['TypeScript', 'React'],
-            link: 'https://github.com/Bhuvaneshwari03/TaxAssistant.git'
+            title: 'PulseFund',
+            desc: 'Real-Time Micro-Fundraising & Donation Platform.',
+            tech: ['Flutter', 'Firebase Authentication', 'Cloud Firestore', 'Google Sign-In', 'Dart'],
+            image: 'pulsefund.png',
+            link: '/projects/pulsefund'
         },
         {
-            title: 'GST Bill Estimation',
-            desc: 'A comprehensive GST billing solution built with HTML, CSS, and PHP for small businesses.',
-            tech: ['HTML', 'PHP'],
-            link: 'https://github.com/Bhuvaneshwari03/GST-Invoice.git'
+            title: 'TimeBox',
+            desc: 'Personal Time-Based Task Planning App.',
+            tech: ['Flutter', 'Firebase Authentication', 'Cloud Firestore', 'Dart'],
+            image: 'timebox.png',
+            link: '/projects/timebox'
         },
         {
-            title: 'Scratch Animation',
-            desc: 'An animation video created using Scratch programming platform.',
-            tech: ['Scratch'],
-            link: 'https://github.com/Bhuvaneshwari03/ScratchAnimation.git'
+            title: 'MindDump',
+            desc: 'An AI-powered mental inbox to capture, organize, and clear your thoughts effortlessly.',
+            tech: ['React (TypeScript)', 'Supabase', 'Gemini API', 'Tailwind CSS', 'Vite'],
+            image: 'minddump.png',
+            link: '/projects/minddump'
         }
     ];
+
+    const handleImageError = (index) => {
+        setImageErrors(prev => ({ ...prev, [index]: true }));
+    };
 
     return (
         <PageWrapper>
@@ -32,65 +42,99 @@ const Projects = () => {
             <div className="projects-grid" style={{ 
                 display: 'grid', 
                 gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', 
-                gap: '2rem' 
+                gap: '2rem',
+                alignItems: 'stretch'
             }}>
                 {projects.map((project, index) => (
-                    <div key={index} className="glass-card project-card" style={{ 
-                        padding: '0', 
-                        overflow: 'hidden', 
-                        display: 'flex', 
-                        flexDirection: 'column',
-                        minHeight: '300px'
-                    }}>
-                        {/* Placeholder for project image or abstract design */}
+                    <div 
+                        key={index} 
+                        className="glass-card project-card" 
+                        onClick={() => project.link && navigate(project.link)}
+                        style={{ 
+                            padding: '0', 
+                            overflow: 'hidden', 
+                            display: 'flex', 
+                            flexDirection: 'column',
+                            height: '100%',
+                            cursor: project.link ? 'pointer' : 'default'
+                        }}
+                    >
+                        {/* Project image */}
                         <div style={{ 
                             height: '140px', 
-                            background: 'linear-gradient(45deg, #1a1a1a, #2a2a2a)',
+                            background: '#000000',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            borderBottom: '1px solid rgba(255,255,255,0.05)'
+                            borderBottom: '2px solid rgba(255,255,255,0.1)',
+                            overflow: 'hidden'
                         }}>
+                             {imageErrors[index] ? (
                              <h3 style={{ fontSize: '1.5rem', color: 'rgba(255,255,255,0.1)' }}>{project.title.charAt(0)}</h3>
+                             ) : (
+                                <img 
+                                    src={`/images/${project.image}`} 
+                                    alt={project.title}
+                                    style={{ 
+                                        width: '100%', 
+                                        height: '100%', 
+                                        objectFit: 'cover' 
+                                    }}
+                                    onError={() => handleImageError(index)}
+                                />
+                             )}
                         </div>
 
-                        <div style={{ padding: '1.5rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                        <div style={{ padding: '1.5rem', flex: 1, display: 'flex', flexDirection: 'column', minHeight: '200px' }}>
                             <h3 style={{ fontSize: '1.4rem', marginBottom: '0.5rem' }}>{project.title}</h3>
-                            <p style={{ color: '#b0b0b0', fontSize: '0.95rem', marginBottom: '1.5rem', flex: 1, lineHeight: '1.6' }}>
+                            <p style={{ color: '#b0b0b0', fontSize: '0.95rem', marginBottom: '1rem', flex: 1, lineHeight: '1.6' }}>
                                 {project.desc}
                             </p>
                             
-                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1.5rem' }}>
+                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginTop: 'auto' }}>
                                 {project.tech.map((t, i) => (
                                     <span key={i} style={{ 
-                                        fontSize: '0.8rem', 
-                                        padding: '0.2rem 0.6rem', 
-                                        borderRadius: '4px', 
-                                        background: 'rgba(255,255,255,0.05)',
-                                        color: '#ccc' 
+                                        fontSize: '0.85rem', 
+                                        padding: '0.4rem 0.8rem', 
+                                        borderRadius: '8px', 
+                                        background: '#2a2a2a',
+                                        color: '#fff',
+                                        fontWeight: '500'
                                     }}>
                                         {t}
                                     </span>
                                 ))}
                             </div>
-
-                            <a href={project.link} target="_blank" rel="noreferrer" className="btn btn-primary" style={{ textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
-                                View on GitHub <FaGithub />
-                            </a>
                         </div>
                     </div>
                 ))}
             </div>
             <style>{`
                 .project-card {
-                    transition: transform 0.3s ease, box-shadow 0.3s ease;
+                    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+                    background: #000000 !important;
                 }
                 .project-card:hover {
                     transform: translateY(-5px);
-                    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+                    box-shadow: 0 8px 30px rgba(0,0,0,1), inset 0 0 0 1px rgba(0, 0, 0, 0.5);
+                    border-color: rgba(255,255,255,0.15);
+                }
+                .project-card[style*="cursor: pointer"]:hover {
                     border-color: rgba(255,255,255,0.2);
                 }
             `}</style>
+            {/* Gemini Credit */}
+            <div style={{
+                textAlign: 'center',
+                margin: '2rem 0 1.4rem',
+                color: '#b0b0b0',
+                fontSize: '0.92rem',
+                opacity: 0.64,
+                fontWeight: 500,
+                letterSpacing: '0.01em'
+            }}>
+                Images on this page were created with <span style={{color:'#02d296'}}>Gemini</span>.
+            </div>
         </PageWrapper>
     );
 };

@@ -36,17 +36,6 @@ const Navbar = () => {
           </li>
           <li className="nav-item">
             <NavLink
-              to="/experience"
-              className={({ isActive }) =>
-                "nav-links" + (isActive ? " active" : "")
-              }
-              onClick={closeMenu}
-            >
-              Experience
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink
               to="/projects"
               className={({ isActive }) =>
                 "nav-links" + (isActive ? " active" : "")
@@ -55,6 +44,17 @@ const Navbar = () => {
             >
               Projects
             </NavLink>
+          </li>
+          <li className="nav-item">
+            <a
+              href="/Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="nav-links"
+              onClick={closeMenu}
+            >
+              Résumé
+            </a>
           </li>
           <li className="nav-item">
             <NavLink
