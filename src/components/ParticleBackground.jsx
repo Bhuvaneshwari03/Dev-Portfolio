@@ -136,10 +136,64 @@ const FlowFieldParticles = ({ globalMouse }) => {
     );
 };
 
+// Graceful Fallback for non-WebGL environments
+const FallbackBackground = () => (
+  <div style={{
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    zIndex: -1,
+    // Premium dark gradient as fallback
+    background: 'radial-gradient(circle at 50% 50%, #1a1a1a 0%, #000000 100%)',
+  }} />
+);
+
+class WebGLBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.warn("WebGL failed to initialize:", error);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
 const ParticleBackground = () => {
   // We lift the mouse tracking up here to the React component level
-  // This ensures it works DOM-wide, regardless of Three.js canvas quirks
   const globalMouse = useGlobalMouse();
+  const [canRender, setCanRender] = React.useState(true);
+
+  // Pre-check WebGL support
+  useEffect(() => {
+    try {
+      const canvas = document.createElement('canvas');
+      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+      if (!gl) {
+        setCanRender(false);
+        console.warn("WebGL not supported in this environment.");
+      }
+    } catch (e) {
+      setCanRender(false);
+    }
+  }, []);
+
+  if (!canRender) {
+    return <FallbackBackground />;
+  }
 
   return (
     <div style={{
@@ -150,19 +204,29 @@ const ParticleBackground = () => {
       height: '100%',
       zIndex: -1,
       background: '#0a0a0a',
-      pointerEvents: 'none' // Canvas does not block ANY interaction
+      pointerEvents: 'none'
     }}>
-      <Canvas 
-        camera={{ position: [0, 0, 15], fov: 60 }}
-        dpr={[1, 2]} // Handle high DPI screens
-        gl={{ alpha: false, antialias: false }} // Optimization
-      >
-        <color attach="background" args={['#0a0a0a']} />
-        <fog attach="fog" args={['#0a0a0a', 10, 40]} />
-        
-        {/* Pass the global trusted mouse coordinates to the scene */}
-        <FlowFieldParticles globalMouse={globalMouse} />
-      </Canvas>
+      <WebGLBoundary fallback={<FallbackBackground />}>
+        <Canvas 
+          camera={{ position: [0, 0, 15], fov: 60 }}
+          dpr={[1, 2]} 
+          gl={{ 
+            alpha: true, 
+            antialias: true,
+            powerPreference: "default",
+            failIfMajorPerformanceCaveat: false 
+          }}
+          // Handle context creation errors explicitly
+          onCreated={({ gl }) => {
+            if (!gl) setCanRender(false);
+          }}
+        >
+          <color attach="background" args={['#0a0a0a']} />
+          <fog attach="fog" args={['#0a0a0a', 10, 40]} />
+          
+          <FlowFieldParticles globalMouse={globalMouse} />
+        </Canvas>
+      </WebGLBoundary>
     </div>
   );
 };

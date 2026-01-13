@@ -23,7 +23,7 @@ function App() {
 
   return (
     <div className={`app-container ${isDetailsPage ? 'project-details-page' : ''}`}>
-      {/* Dynamic 3D Background - Hidden on project details pages */}
+      {/* Dynamic 3D Background - Hidden on project details */}
       {!isDetailsPage && <ParticleBackground />}
       
       <Navbar />
