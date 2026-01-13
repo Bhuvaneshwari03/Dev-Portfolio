@@ -47,17 +47,23 @@ const PulseFundDetails = () => {
 
                     {/* Images Section - At the top after title */}
                     <div style={{ 
-                        display: 'grid', 
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', 
+                        display: 'flex',
+                        overflowX: 'auto',
                         gap: '1rem',
-                        marginBottom: '2rem'
+                        marginBottom: '2rem',
+                        paddingBottom: '10px',
+                        scrollSnapType: 'x mandatory'
                     }}>
                         <div style={{ 
                             background: '#0a0a0a',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            overflow: 'hidden'
+                            overflow: 'hidden',
+                            minWidth: '400px',
+                            scrollSnapAlign: 'start',
+                            borderRadius: '8px',
+                            border: '1px solid #333'
                         }}>
                             {imageError ? (
                                 <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.9rem', padding: '2rem' }}>Image Placeholder 1</div>
@@ -75,28 +81,67 @@ const PulseFundDetails = () => {
                             )}
                         </div>
                         <div style={{ 
-                            minHeight: '200px',
                             background: '#0a0a0a',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            color: 'rgba(255,255,255,0.3)',
-                            fontSize: '0.9rem',
-                            padding: '2rem'
+                            overflow: 'hidden',
+                            minWidth: '400px',
+                            scrollSnapAlign: 'start',
+                            borderRadius: '8px',
+                            border: '1px solid #333'
                         }}>
-                            Image Placeholder 2
+                            <img 
+                                src="/images/pulsefund-2.jpg" 
+                                alt="PulseFund Roles"
+                                style={{ 
+                                    width: '100%', 
+                                    height: 'auto', 
+                                    display: 'block'
+                                }}
+                            />
                         </div>
                         <div style={{ 
-                            minHeight: '200px',
                             background: '#0a0a0a',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            color: 'rgba(255,255,255,0.3)',
-                            fontSize: '0.9rem',
-                            padding: '2rem'
+                            overflow: 'hidden',
+                            minWidth: '400px',
+                            scrollSnapAlign: 'start',
+                            borderRadius: '8px',
+                            border: '1px solid #333'
                         }}>
-                            Image Placeholder 3
+                            <img 
+                                src="/images/pulsefund-3.jpg" 
+                                alt="PulseFund Listing"
+                                style={{ 
+                                    width: '100%', 
+                                    height: 'auto', 
+                                    display: 'block'
+                                }}
+                            />
+                        </div>
+                        <div style={{ 
+                            background: '#0a0a0a',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            overflow: 'hidden',
+                            minWidth: '400px',
+                            scrollSnapAlign: 'start',
+                            borderRadius: '8px',
+                            border: '1px solid #333'
+                        }}>
+                            <img 
+                                src="/images/pulsefund-4.jpg" 
+                                alt="PulseFund Success"
+                                style={{ 
+                                    width: '100%', 
+                                    height: 'auto', 
+                                    display: 'block'
+                                }}
+                            />
                         </div>
                     </div>
 
